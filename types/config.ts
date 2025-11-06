@@ -38,6 +38,7 @@ export interface ConfigProps {
       description?: string;
       price: number;
       priceAnchor?: number;
+      category?: string;
       features: {
         name: string;
       }[];

@@ -5,12 +5,36 @@
 
 @theme {
   --font-display: "Satoshi", "sans-serif";
-  
+
+  /* OneView Brand Colors */
+  --color-oneview-dark: #2a3847;
+  --color-oneview-purple: #6e56cf;
+  --color-primary: #2a3847;
+  --color-primary-content: #ffffff;
+  --color-accent: #6e56cf;
+  --color-accent-content: #ffffff;
+
+  /* Card & Surface Colors (with transparency for layering) */
+  --color-card: #ffffff;
+  --color-card-muted: rgb(255 255 255 / 0.6);
+  --color-border: rgb(229 231 235);
+  --color-border-subtle: rgb(229 231 235 / 0.8);
+  --color-ring: rgb(110 86 207 / 0.3);
+
+  /* Background hierarchy */
+  --color-background: #ffffff;
+  --color-background-muted: #f9fafb;
+  --color-background-subtle: #f3f4f6;
+
+  /* Animation tokens - aligned with Vexly timing */
   --animate-shimmer: shimmer 3s ease-out infinite alternate;
   --animate-opacity: opacity 0.25s ease-in-out;
   --animate-appearFromRight: appearFromRight 300ms ease-in-out;
   --animate-wiggle: wiggle 1.5s ease-in-out infinite;
   --animate-popup: popup 0.25s ease-in-out;
+  --animate-scribble: scribble 1.5s ease-in-out forwards;
+  --animate-accordion: accordion 400ms ease-in-out;
+  --animate-transition: transition 400ms ease-in-out;
 
   @keyframes shimmer {
     0% { background-position: 0 50%; }
@@ -41,6 +65,26 @@
     50% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
   }
+
+  @keyframes scribble {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  @keyframes macbookRotate {
+    0% { transform: perspective(1200px) rotateY(0deg) rotateX(0deg); }
+    100% { transform: perspective(1200px) rotateY(-15deg) rotateX(5deg); }
+  }
+
+  @keyframes accordion {
+    0% { height: 0; opacity: 0; }
+    100% { height: var(--accordion-height); opacity: 1; }
+  }
+
+  @keyframes transition {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 }
 
 html,
@@ -53,17 +97,19 @@ progress::-webkit-progress-value {
 }
 
 .btn-gradient {
-  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82) !important;
-  background-size: 300% 300% !important;
-  animation: var(--animate-shimmer) !important;
+  background-color: #6e56cf !important;
   border: 0 !important;
   border-color: transparent !important;
   color: white !important;
+  border-radius: 9999px !important;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .btn-gradient:hover {
-  filter: saturate(1.2) !important;
+  background-color: #5d4ab0 !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 10px 15px -3px rgb(110 86 207 / 0.3), 0 4px 6px -4px rgb(110 86 207 / 0.2) !important;
 }
 
 .btn-gradient:disabled {
@@ -73,4 +119,108 @@ progress::-webkit-progress-value {
 
 .btn {
   text-transform: capitalize !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+.btn-primary {
+  background-color: #6e56cf !important;
+  border-color: #6e56cf !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #5d4ab0 !important;
+  border-color: #5d4ab0 !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 10px 15px -3px rgb(110 86 207 / 0.3), 0 4px 6px -4px rgb(110 86 207 / 0.2) !important;
+}
+
+/* Modern card patterns with transparency and rings */
+.card-modern {
+  @apply rounded-xl border border-border-subtle bg-card/60 backdrop-blur-sm;
+  @apply ring-1 ring-border/80;
+  @apply transition-all duration-300;
+}
+
+.card-modern:hover {
+  @apply bg-card shadow-lg ring-ring;
+}
+
+.card-solid {
+  @apply rounded-xl border-0 bg-card;
+  @apply ring-1 ring-border/80;
+  @apply transition-all duration-300;
+}
+
+/* Accordion states */
+.accordion-item {
+  @apply transition-all duration-300;
+}
+
+.accordion-item[data-state="open"] {
+  @apply ring-ring/30;
+}
+
+/* Section spacing rhythm */
+.section-spacing {
+  @apply py-12 sm:py-20;
+}
+
+.section-spacing-lg {
+  @apply py-16 sm:py-24;
+}
+
+/* Container widths */
+.container-primary {
+  @apply max-w-6xl mx-auto px-4 sm:px-6;
+}
+
+.container-narrow {
+  @apply max-w-3xl mx-auto px-4 sm:px-6;
+}
+
+/* Override DaisyUI colors with OneView brand colors */
+:root {
+  --p: 210 40% 25%; /* primary: #2a3847 */
+  --pc: 0 0% 100%; /* primary-content: white */
+  --a: 259 56% 57%; /* accent: #6e56cf */
+  --ac: 0 0% 100%; /* accent-content: white */
+}
+
+/* Force accent color utilities to use OneView purple */
+.bg-accent {
+  background-color: #6e56cf !important;
+}
+
+.text-accent {
+  color: #6e56cf !important;
+}
+
+.border-accent {
+  border-color: #6e56cf !important;
+}
+
+.ring-accent {
+  --tw-ring-color: #6e56cf !important;
+}
+
+.bg-accent\/5 {
+  background-color: rgb(110 86 207 / 0.05) !important;
+}
+
+.bg-accent\/10 {
+  background-color: rgb(110 86 207 / 0.1) !important;
+}
+
+.border-accent\/30 {
+  border-color: rgb(110 86 207 / 0.3) !important;
+}
+
+.ring-accent\/20 {
+  --tw-ring-color: rgb(110 86 207 / 0.2) !important;
 }

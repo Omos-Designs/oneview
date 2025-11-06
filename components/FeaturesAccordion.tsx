@@ -23,35 +23,12 @@ interface Feature {
 // - alt: The alt text of the image (if type is 'image')
 const features = [
   {
-    title: "Emails",
+    title: "Connect All Your Accounts",
     description:
-      "Send transactional emails, setup your DNS to avoid spam folder (DKIM, DMARC, SPF in subdomain), and listen to webhook to receive & forward emails",
-    type: "video",
-    path: "https://d3m8mk7e1mf7xn.cloudfront.net/app/newsletter.webm",
-    format: "video/webm",
-    svg: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="w-6 h-6"
-      >
-        <path
-          strokeLinecap="round"
-          d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Payments",
-    description:
-      "Create checkout sessions, handle webhooks to update user's account (subscriptions, one-time payments...) and tips to setup your account & reduce chargebacks",
+      "OneView supports linking every bank account, credit card,  and investment account in seconds using Plaid. See your balances sync automatically—no more logging into 5 different apps to see your full financial picture.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
-    alt: "A computer",
+    path: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
+    alt: "Bank accounts connected securely",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -64,15 +41,18 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+          d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
         />
       </svg>
     ),
   },
   {
-    title: "Authentication",
+    title: "Manual Account Entry (if you want)!",
     description:
-      "Magic links setup, login with Google walkthrough, save user in MongoDB/Supabase, private/protected pages & API calls",
+      "Want to keep you account information private? No problem. You can manually add your account balances and fixed expenses instead of linking your accounts. OneView will still calculate your available balance and forecast your finances based on the data you provide.",
+    type: "image",
+    path: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
+    alt: "Bank accounts connected securely",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -85,15 +65,18 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+          d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
         />
       </svg>
     ),
   },
   {
-    title: "Style",
+    title: "See Your Financial Health at a Glance",
     description:
-      "Components, animations & sections (like this features section), 20+ themes with daisyUI, automatic dark mode",
+      "Instantly know if you're in the green or in the red with our color-coded health indicator. No spreadsheets, no math—just one number that shows exactly where you stand financially, right now.",
+    type: "image",
+    path: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
+    alt: "Financial health dashboard",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +89,76 @@ const features = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"
+          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Know What You Can Actually Spend",
+    description:
+      "We calculate your true \"available after liabilities\" balance by factoring in all your upcoming bills and expected income. No more surprise overdrafts or wondering if you can afford that purchase.",
+    type: "image",
+    path: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
+    alt: "Available balance calculation",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Track Recurring Income & Bills",
+    description:
+      "Add your paycheck schedule, rent, subscriptions, and other recurring events. OneView forecasts your financial position for the month ahead so you're never caught off guard by upcoming expenses.",
+    type: "image",
+    path: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
+    alt: "Recurring bills and income tracking",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Plan Ahead with Forecasting",
+    description:
+      "See how your finances will look next week, next month, or next quarter. OneView projects your balance based on recurring events so you can make confident financial decisions today.",
+    svg: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
         />
       </svg>
     ),
@@ -128,37 +180,45 @@ const Item = ({
   const { title, description, svg } = feature;
 
   return (
-    <li>
+    <li className={`accordion-item rounded-lg border transition-all duration-300 ${isOpen ? 'bg-accent/5 border-accent/30 ring-1 ring-accent/20' : 'bg-background border-border-subtle hover:bg-background-muted'}`}>
       <button
-        className="relative flex gap-2 items-center w-full py-5 text-base font-medium text-left md:text-lg"
+        className="relative flex gap-3 items-center w-full px-4 py-4 text-base font-medium text-left transition-colors"
         onClick={(e) => {
           e.preventDefault();
           setFeatureSelected();
         }}
         aria-expanded={isOpen}
       >
-        <span className={`duration-100 ${isOpen ? "text-primary" : ""}`}>
+        <span className={`duration-200 flex-shrink-0 ${isOpen ? "text-accent" : "text-base-content/60"}`}>
           {svg}
         </span>
         <span
-          className={`flex-1 text-base-content ${
-            isOpen ? "text-primary font-semibold" : ""
+          className={`flex-1 transition-colors duration-200 ${
+            isOpen ? "text-accent font-semibold" : "text-base-content"
           }`}
         >
           <h3 className="inline">{title}</h3>
         </span>
+        <svg
+          className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-accent' : 'text-base-content/40'}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
 
       <div
         ref={accordion}
-        className={`transition-all duration-300 ease-in-out text-base-content-secondary overflow-hidden`}
+        className={`transition-all duration-400 ease-in-out overflow-hidden`}
         style={
           isOpen
             ? { maxHeight: accordion?.current?.scrollHeight, opacity: 1 }
             : { maxHeight: 0, opacity: 0 }
         }
       >
-        <div className="pb-5 leading-relaxed">{description}</div>
+        <div className="px-4 pb-4 pt-1 leading-relaxed text-sm text-base-content/70">{description}</div>
       </div>
     </li>
   );
@@ -168,7 +228,7 @@ const Item = ({
 // Video are set to autoplay for best UX.
 const Media = ({ feature }: { feature: Feature }) => {
   const { type, path, format, alt } = feature;
-  const style = "rounded-2xl aspect-square w-full sm:w-[26rem]";
+  const style = "rounded-xl aspect-square w-full shadow-xl border border-border-subtle";
   const size = {
     width: 500,
     height: 500,
@@ -194,13 +254,15 @@ const Media = ({ feature }: { feature: Feature }) => {
       <Image
         src={path}
         alt={alt}
-        className={`${style} object-cover object-center`}
+        className={`${style} object-cover object-center bg-background-muted`}
         width={size.width}
         height={size.height}
       />
     );
   } else {
-    return <div className={`${style} !border-none`}></div>;
+    return <div className={`${style} bg-background-muted flex items-center justify-center`}>
+      <span className="text-base-content/30 text-sm">Feature preview</span>
+    </div>;
   }
 };
 
@@ -211,17 +273,17 @@ const FeaturesAccordion = () => {
 
   return (
     <section
-      className="py-24 md:py-32 space-y-24 md:space-y-32 max-w-7xl mx-auto bg-base-100 "
+      className="section-spacing"
       id="features"
     >
-      <div className="px-8">
-        <h2 className="font-extrabold text-4xl lg:text-6xl tracking-tight mb-12 md:mb-24">
-          All you need to ship your startup fast
-          <span className="bg-neutral text-neutral-content px-2 md:px-4 ml-1 md:ml-1.5 leading-relaxed whitespace-nowrap">
-            and get profitable
+      <div className="container-primary">
+        <h2 className="font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight mb-12 md:mb-16 text-center">
+          Everything you need to{" "}
+          <span className="bg-accent text-white px-2 md:px-4 ml-1 md:ml-1.5 leading-relaxed whitespace-nowrap inline-block">
+            take control of your money
           </span>
         </h2>
-        <div className=" flex flex-col md:flex-row gap-12 md:gap-24">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-16">
           <div className="grid grid-cols-1 items-stretch gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-20">
             <ul className="w-full">
               {features.map((feature, i) => (

@@ -21,14 +21,6 @@ const Arrow = ({ extraStyle }: { extraStyle: string }) => {
     </svg>
   );
 };
-const Step = ({ emoji, text }: { emoji: string; text: string }) => {
-  return (
-    <div className="w-full md:w-48 flex flex-col gap-2 items-center justify-center">
-      <span className="text-4xl">{emoji}</span>
-      <h3 className="font-bold">{text}</h3>
-    </div>
-  );
-};
 
 // Problem Agitation: A crucial, yet overlooked, component for a landing page that sells.
 // It goes under your Hero section, and above your Features section.
@@ -36,31 +28,40 @@ const Step = ({ emoji, text }: { emoji: string; text: string }) => {
 // Your Problem section explains what happens to the customer if its problem isn't solved.
 // The copy should NEVER mention your product. Instead, it should dig the emotional outcome of not fixing a problem.
 // For instance:
-// - Hero: "ShipFast helps developers launch startups fast"
-// - Problem Agitation: "Developers spend too much time adding features, get overwhelmed, and quit." (not about ShipFast at all)
-// - Features: "ShipFast has user auth, Stripe, emails all set up for you"
+// - Hero: "OneView shows your complete financial picture in one place"
+// - Problem Agitation: "Your money is scattered everywhere, you're guessing what you can spend, and overdrafts happen" (not about OneView at all)
+// - Features: "OneView connects all your accounts and shows your true available balance"
 const Problem = () => {
   return (
-    <section className="bg-neutral text-neutral-content">
-      <div className="max-w-7xl mx-auto px-8 py-16 md:py-32 text-center">
-        <h2 className="max-w-3xl mx-auto font-extrabold text-4xl md:text-5xl tracking-tight mb-6 md:mb-8">
-          80% of startups fail because founders never launch
+    <section className="section-spacing bg-primary/5">
+      <div className="container-primary text-center">
+        <h2 className="max-w-3xl mx-auto font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-4 md:mb-6">
+          Your money is scattered. Your budget apps don&apos;t help.
         </h2>
-        <p className="max-w-xl mx-auto text-lg opacity-90 leading-relaxed mb-12 md:mb-20">
-          Emails, DNS records, user authentication... There&apos;s so much going
-          on.
+        <p className="max-w-xl mx-auto text-base sm:text-lg text-base-content/70 leading-relaxed mb-12">
+          Checking three apps just to know if you can afford dinner. Budgets that break when life happens.
+          Bills you forgot about until they hit.
         </p>
 
-        <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-6">
-          <Step emoji="🧑‍💻" text="8 hrs to add Stripe" />
+        <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-6 max-w-4xl mx-auto">
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+            <span className="text-4xl">{" 🏦"}</span>
+            <h3 className="font-semibold text-sm">Money scattered across 5+ accounts</h3>
+          </div>
 
-          <Arrow extraStyle="max-md:-scale-x-100 md:-rotate-90" />
+          <Arrow extraStyle="max-md:-scale-x-100 md:-rotate-90 text-base-content/30" />
 
-          <Step emoji="😮‍💨" text="Struggle to find time" />
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+            <span className="text-4xl">{"😰"}</span>
+            <h3 className="font-semibold text-sm">Guess what you can spend</h3>
+          </div>
 
-          <Arrow extraStyle="md:-scale-x-100 md:-rotate-90" />
+          <Arrow extraStyle="md:-scale-x-100 md:-rotate-90 text-base-content/30" />
 
-          <Step emoji="😔" text="Quit project" />
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+            <span className="text-4xl">{"📉"}</span>
+            <h3 className="font-semibold text-sm">Overdrafts & missed bills</h3>
+          </div>
         </div>
       </div>
     </section>

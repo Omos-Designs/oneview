@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
-import logo from "@/app/icon.png";
 import config from "@/config";
 
 const links: {
@@ -14,12 +13,12 @@ const links: {
   label: string;
 }[] = [
   {
-    href: "/#pricing",
-    label: "Pricing",
+    href: "/#features",
+    label: "Features",
   },
   {
-    href: "/#testimonials",
-    label: "Reviews",
+    href: "/#pricing",
+    label: "Pricing",
   },
   {
     href: "/#faq",
@@ -41,9 +40,9 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="sticky top-0 z-50 bg-background/50 backdrop-blur-2xl border-b border-accent/10 shadow-lg transition-all duration-300">
       <nav
-        className="container flex items-center justify-between px-8 py-4 mx-auto"
+        className="container-primary flex items-center justify-between py-2"
         aria-label="Global"
       >
         {/* Your logo/name on large screens */}
@@ -54,15 +53,13 @@ const Header = () => {
             title={`${config.appName} homepage`}
           >
             <Image
-              src={logo}
+              src="/oneview_name_logo.svg"
               alt={`${config.appName} logo`}
-              className="w-8"
-              placeholder="blur"
+              className="h-32 w-auto"
               priority={true}
-              width={32}
-              height={32}
+              width={120}
+              height={28}
             />
-            <span className="font-extrabold text-lg">{config.appName}</span>
           </Link>
         </div>
         {/* Burger button to open menu on mobile */}
@@ -91,12 +88,12 @@ const Header = () => {
         </div>
 
         {/* Your links on large screens */}
-        <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:items-center">
+        <div className="hidden lg:flex lg:justify-center lg:gap-8 lg:items-center">
           {links.map((link) => (
             <Link
               href={link.href}
               key={link.href}
-              className="link link-hover"
+              className="text-lg font-medium text-base-content/70 hover:text-base-content transition-colors duration-200"
               title={link.label}
             >
               {link.label}
@@ -111,7 +108,7 @@ const Header = () => {
       {/* Mobile menu, show/hide based on menu state. */}
       <div className={`relative z-50 ${isOpen ? "" : "hidden"}`}>
         <div
-          className={`fixed inset-y-0 right-0 z-10 w-full px-8 py-4 overflow-y-auto bg-base-200 sm:max-w-sm sm:ring-1 sm:ring-neutral/10 transform origin-right transition ease-in-out duration-300`}
+          className={`fixed inset-y-0 right-0 z-10 w-full px-6 py-4 overflow-y-auto bg-background sm:max-w-sm sm:ring-1 sm:ring-border/80 transform origin-right transition ease-in-out duration-300`}
         >
           {/* Your logo/name on small screens */}
           <div className="flex items-center justify-between">
@@ -121,15 +118,13 @@ const Header = () => {
               href="/"
             >
               <Image
-                src={logo}
+                src="/oneview_name_logo.svg"
                 alt={`${config.appName} logo`}
-                className="w-8"
-                placeholder="blur"
+                className="h-20 w-auto"
                 priority={true}
-                width={32}
-                height={32}
+                width={120}
+                height={28}
               />
-              <span className="font-extrabold text-lg">{config.appName}</span>
             </Link>
             <button
               type="button"
@@ -162,7 +157,7 @@ const Header = () => {
                   <Link
                     href={link.href}
                     key={link.href}
-                    className="link link-hover"
+                    className="text-base font-medium text-base-content hover:text-accent transition-colors duration-200"
                     title={link.label}
                   >
                     {link.label}

@@ -1,7 +1,7 @@
 const Arrow = ({ extraStyle }: { extraStyle: string }) => {
   return (
     <svg
-      className={`shrink-0 w-12 fill-neutral-content opacity-70 ${extraStyle}`}
+      className={`shrink-0 w-12 ${extraStyle}`}
       viewBox="0 0 138 138"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -44,23 +44,32 @@ const Problem = () => {
         </p>
 
         <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-6 max-w-4xl mx-auto">
-          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform relative">
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent text-white font-bold text-base flex items-center justify-center shadow-lg ring-2 ring-white z-10">
+              1
+            </div>
             <span className="text-4xl">{" 🏦"}</span>
             <h3 className="font-semibold text-sm">Money scattered across 5+ accounts</h3>
           </div>
 
-          <Arrow extraStyle="max-md:-scale-x-100 md:-rotate-90 text-base-content/30" />
+          <Arrow extraStyle="max-md:-scale-x-100 md:-rotate-90 fill-[#6e56cf]" />
 
-          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform relative">
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent text-white font-bold text-base flex items-center justify-center shadow-lg ring-2 ring-white z-10">
+              2
+            </div>
             <span className="text-4xl">{"😰"}</span>
             <h3 className="font-semibold text-sm">Guess what you can spend</h3>
           </div>
 
-          <Arrow extraStyle="md:-scale-x-100 md:-rotate-90 text-base-content/30" />
+          <Arrow extraStyle="md:-scale-x-100 md:-rotate-90 fill-[#6e56cf]" />
 
-          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform">
+          <div className="card-modern p-6 w-full md:w-48 flex flex-col gap-3 items-center justify-center hover:scale-105 transition-transform relative">
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-accent text-white font-bold text-base flex items-center justify-center shadow-lg ring-2 ring-white z-10">
+              3
+            </div>
             <span className="text-4xl">{"📉"}</span>
-            <h3 className="font-semibold text-sm">Overdrafts & missed bills</h3>
+            <h3 className="font-semibold text-sm">Spend more than you can afford</h3>
           </div>
         </div>
       </div>

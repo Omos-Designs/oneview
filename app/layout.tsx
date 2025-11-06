@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
-import { Inter } from "next/font/google";
+import { Overpass, Overpass_Mono, Inter } from "next/font/google";
 import { Viewport } from "next";
 import { getSEOTags } from "@/libs/seo";
 import ClientLayout from "@/components/LayoutClient";
 import config from "@/config";
 import "./globals.css";
 
-const font = Inter({ subsets: ["latin"] });
+const font = Overpass({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
 	// Will use the primary color of your theme to show a nice theme color in the URL bar of supported browsers

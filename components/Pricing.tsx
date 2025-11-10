@@ -22,15 +22,47 @@ const Pricing = () => {
   const plans = [monthlyPlan, lifetimePlan].filter(Boolean);
 
   return (
-    <section className="section-spacing bg-background-muted" id="pricing">
-      <div className="container-primary max-w-5xl">
+    <section className="section-spacing bg-background-muted relative" id="pricing">
+      {/* Grayed out overlay */}
+      <div className="absolute inset-0 bg-base-100/40 backdrop-blur-[2px] z-10 pointer-events-none"></div>
+
+      <div className="container-primary max-w-5xl relative">
         <div className="flex flex-col text-center w-full mb-8 md:mb-12">
           <p className="font-semibold text-sm text-accent mb-3 uppercase tracking-wider">
             Pricing
           </p>
-          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-4">
-            Simple, Transparent Pricing
-          </h2>
+
+          {/* Construction Banner */}
+          <div className="relative mb-6">
+            {/* Black and yellow striped tape - top */}
+            <div className="absolute -top-8 left-0 right-0 h-8 overflow-hidden z-20">
+              <div className="w-full h-full bg-repeating-stripes transform -rotate-2"></div>
+            </div>
+
+            <div className="relative inline-block mx-auto">
+              <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-4">
+                Simple, Transparent Pricing
+              </h2>
+
+              {/* Launching Soon Badge */}
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
+                <div className="bg-yellow-400 text-black px-6 py-2 rounded-lg shadow-xl border-2 border-black transform -rotate-2">
+                  <div className="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                      <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                    </svg>
+                    <span className="font-black text-sm uppercase tracking-wider">Launching Soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Black and yellow striped tape - bottom */}
+            <div className="absolute -bottom-2 left-0 right-0 h-8 overflow-hidden z-20">
+              <div className="w-full h-full bg-repeating-stripes transform rotate-1"></div>
+            </div>
+          </div>
+
           <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
             Choose between manual updates or automated account linking
           </p>
@@ -38,23 +70,21 @@ const Pricing = () => {
 
         {/* Toggle Switch */}
         <div className="flex flex-col items-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-4 bg-background/80 backdrop-blur-sm p-2 rounded-full border-2 border-border-subtle shadow-lg">
+          <div className="inline-flex items-center gap-4 bg-background/80 backdrop-blur-sm p-2 rounded-full border-2 border-border-subtle shadow-lg opacity-60 pointer-events-none">
             <button
-              onClick={() => setIsPlaidEnabled(false)}
               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
                 !isPlaidEnabled
                   ? "bg-accent text-white shadow-md scale-105"
-                  : "text-base-content/70 hover:text-base-content"
+                  : "text-base-content/70"
               }`}
             >
               Manual Entry
             </button>
             <button
-              onClick={() => setIsPlaidEnabled(true)}
               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 flex items-center gap-2 ${
                 isPlaidEnabled
                   ? "bg-accent text-white shadow-md scale-105"
-                  : "text-base-content/70 hover:text-base-content"
+                  : "text-base-content/70"
               }`}
             >
               <svg
@@ -82,10 +112,13 @@ const Pricing = () => {
         {/* Pricing Cards */}
         <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
           {plans.map((plan) => (
-            <div key={plan.priceId} className="relative w-full max-w-lg">
+            <div key={plan.priceId} className="relative w-full max-w-lg group/card">
+              {/* Background glow effect on hover */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-accent/10 via-accent/5 to-accent/10 rounded-2xl blur-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
+
               {plan.isFeatured && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <span className="badge text-xs text-white font-semibold border-0 bg-accent px-3 py-2">
+                  <span className="badge text-xs text-white font-semibold border-0 bg-accent px-3 py-2 shadow-lg">
                     POPULAR
                   </span>
                 </div>
@@ -96,8 +129,8 @@ const Pricing = () => {
               )}
 
               <div
-                className={`relative flex flex-col h-full gap-5 lg:gap-6 z-10 bg-background p-6 md:p-8 rounded-xl border border-border-subtle shadow-lg transition-all duration-300 ${
-                  plan.isFeatured ? "ring-2 ring-accent/20" : ""
+                className={`relative flex flex-col h-full gap-5 lg:gap-6 z-10 bg-background/95 backdrop-blur-md blur-[5px] p-6 md:p-8 rounded-xl border border-border-subtle shadow-xl hover:shadow-2xl hover:shadow-accent/10 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 group pointer-events-none ${
+                  plan.isFeatured ? "ring-2 ring-accent/20 hover:ring-accent/40" : "hover:ring-2 hover:ring-accent/20"
                 }`}
               >
                 <div className="flex justify-between items-center gap-4">

@@ -11,7 +11,7 @@ import config from "@/config";
 // It automatically redirects user to callbackUrl (config.auth.callbackUrl) after login, which is normally a private page for users to manage their accounts.
 // If the user is already logged in, it will show their profile picture & redirect them to callbackUrl immediately.
 const ButtonSignin = ({
-  text = "Get started",
+  text = "Join Waitlist",
   extraStyle,
 }: {
   text?: string;
@@ -31,6 +31,14 @@ const ButtonSignin = ({
 
     getUser();
   }, [supabase]);
+
+  const handleScrollToWaitlist = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const waitlistElement = document.getElementById('waitlist');
+    if (waitlistElement) {
+      waitlistElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   if (user) {
     return (
@@ -60,7 +68,8 @@ const ButtonSignin = ({
   return (
     <Link
       className={`btn ${extraStyle ? extraStyle : ""}`}
-      href={config.auth.loginUrl}
+      href="#waitlist"
+      onClick={handleScrollToWaitlist}
     >
       {text}
     </Link>

@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'logos-world.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.logo.dev',
+      },
     ],
   },
   webpack: (config, { webpack, isServer }) => {

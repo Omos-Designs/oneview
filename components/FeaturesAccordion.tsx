@@ -27,8 +27,8 @@ const features = [
     description:
       "OneView supports linking every bank account, credit card,  and investment account in seconds using Plaid. See your balances sync automatically—no more logging into 5 different apps to see your full financial picture.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
-    alt: "Bank accounts connected securely",
+    path: "/undraw_finance_m6vw.svg",
+    alt: "Connect all your financial accounts",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ const features = [
     description:
       "Want to keep you account information private? No problem. You can manually add your account balances and fixed expenses instead of linking your accounts. OneView will still calculate your available balance and forecast your finances based on the data you provide.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
-    alt: "Bank accounts connected securely",
+    path: "/undraw_spreadsheets_bh6n.svg",
+    alt: "Manual data entry and spreadsheet management",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -75,8 +75,8 @@ const features = [
     description:
       "Instantly know if you're in the green or in the red with our color-coded health indicator. No spreadsheets, no math—just one number that shows exactly where you stand financially, right now.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
-    alt: "Financial health dashboard",
+    path: "/undraw_presentation_4ik4.svg",
+    alt: "Visual financial health dashboard presentation",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +99,8 @@ const features = [
     description:
       "We calculate your true \"available after liabilities\" balance by factoring in all your upcoming bills and expected income. No more surprise overdrafts or wondering if you can afford that purchase.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
-    alt: "Available balance calculation",
+    path: "/undraw_personal-finance_xpqg.svg",
+    alt: "Personal finance and spending calculation",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -123,8 +123,8 @@ const features = [
     description:
       "Add your paycheck schedule, rent, subscriptions, and other recurring events. OneView forecasts your financial position for the month ahead so you're never caught off guard by upcoming expenses.",
     type: "image",
-    path: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=3540&q=80",
-    alt: "Recurring bills and income tracking",
+    path: "/undraw_finance_m6vw.svg",
+    alt: "Recurring income and bill tracking",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -146,6 +146,9 @@ const features = [
     title: "Plan Ahead with Forecasting",
     description:
       "See how your finances will look next week, next month, or next quarter. OneView projects your balance based on recurring events so you can make confident financial decisions today.",
+    type: "image",
+    path: "/undraw_presentation_4ik4.svg",
+    alt: "Financial forecasting and projections",
     svg: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +183,7 @@ const Item = ({
   const { title, description, svg } = feature;
 
   return (
-    <li className={`accordion-item rounded-lg border transition-all duration-300 ${isOpen ? 'bg-accent/5 border-accent/30 ring-1 ring-accent/20' : 'bg-background border-border-subtle hover:bg-background-muted'}`}>
+    <li className={`accordion-item rounded-xl border transition-all duration-300 ${isOpen ? 'bg-accent/5 border-accent/30 ring-2 ring-accent/20 shadow-lg shadow-accent/10' : 'bg-background/50 backdrop-blur-sm border-border-subtle hover:bg-background-muted hover:border-accent/20 hover:shadow-md'}`}>
       <button
         className="relative flex gap-3 items-center w-full px-4 py-4 text-base font-medium text-left transition-colors"
         onClick={(e) => {
@@ -228,10 +231,10 @@ const Item = ({
 // Video are set to autoplay for best UX.
 const Media = ({ feature }: { feature: Feature }) => {
   const { type, path, format, alt } = feature;
-  const style = "rounded-xl aspect-square w-full shadow-xl border border-border-subtle";
+  const style = "rounded-2xl aspect-video w-full shadow-2xl hover:shadow-accent/20 transition-all duration-500 border border-border-subtle ring-1 ring-accent/10 hover:ring-accent/30 hover:scale-[1.02]";
   const size = {
-    width: 500,
-    height: 500,
+    width: 800,
+    height: 450,
   };
 
   if (type === "video") {
@@ -251,13 +254,21 @@ const Media = ({ feature }: { feature: Feature }) => {
     );
   } else if (type === "image") {
     return (
-      <Image
-        src={path}
-        alt={alt}
-        className={`${style} object-cover object-center bg-background-muted`}
-        width={size.width}
-        height={size.height}
-      />
+      <div className="relative group">
+        {/* Background glow effect - Purple accent color */}
+        <div className="absolute -inset-1 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to right, rgba(110, 86, 207, 0.2), rgba(110, 86, 207, 0.1))' }}></div>
+
+        {/* Main image with glass morphism effect */}
+        <div className="relative">
+          <Image
+            src={path}
+            alt={alt}
+            className={`${style} object-contain bg-transparent`}
+            width={size.width}
+            height={size.height}
+          />
+        </div>
+      </div>
     );
   } else {
     return <div className={`${style} bg-background-muted flex items-center justify-center`}>

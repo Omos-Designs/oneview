@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Card Logo Validation</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .instructions {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border-left: 4px solid #570df8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .card h3 {
+      margin: 0 0 1rem 0;
+      color: #333;
+      font-size: 1rem;
+    }
+    .logo-container {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+    }
+    .logo-container img {
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: contain;
+    }
+    .domain {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #666;
+      word-break: break-all;
+    }
+    .status {
+      margin-top: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status.loading {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .status.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Credit Card Logo Validation Test</h1>
+
+  <div class="instructions">
+    <strong>Instructions:</strong>
+    <ol>
+      <li>Replace <code>YOUR_LOGO_DEV_API_KEY</code> below with your actual Logo.dev API key</li>
+      <li>Open this file in your browser</li>
+      <li>Check which logos load successfully (green) vs fail (red)</li>
+      <li>Update domain mappings in <code>components/dashboard/CompanyLogo.tsx</code> for failed logos</li>
+    </ol>
+  </div>
+
+  <div class="grid" id="logoGrid"></div>
+
+  <script>
+    // REPLACE THIS WITH YOUR ACTUAL API KEY
+    const API_KEY = 'YOUR_LOGO_DEV_API_KEY';
+
+    const brands = [
+      { name: 'Chase', domain: 'chase.com' },
+      { name: 'American Express', domain: 'americanexpress.com' },
+      { name: 'Capital One', domain: 'capitalone.com' },
+      { name: 'Discover', domain: 'discover.com' },
+      { name: 'Citi', domain: 'citi.com' },
+      { name: 'Wells Fargo', domain: 'wellsfargo.com' },
+      { name: 'Bank of America', domain: 'bankofamerica.com' },
+      { name: 'U.S. Bank', domain: 'usbank.com' },
+      { name: 'Barclays', domain: 'barclays.com' },
+      { name: 'Synchrony', domain: 'synchronybank.com' },
+      { name: 'PNC Bank', domain: 'pnc.com' },
+      { name: 'TD Bank', domain: 'td.com' },
+      { name: 'Navy Federal', domain: 'navyfederal.org' },
+      { name: 'USAA', domain: 'usaa.com' },
+      { name: 'Regions Bank', domain: 'regions.com' },
+      { name: 'Citizens Bank', domain: 'citizensbank.com' },
+      { name: 'Marcus', domain: 'marcus.com' },
+    ];
+
+    const grid = document.getElementById('logoGrid');
+
+    brands.forEach(brand => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const logoUrl = `https://img.logo.dev/${brand.domain}?token=${API_KEY}&size=80&format=png`;
+
+      card.innerHTML = `
+        <h3>${brand.name}</h3>
+        <div class="logo-container">
+          <img src="${logoUrl}" alt="${brand.name} logo" id="logo-${brand.domain}">
+        </div>
+        <div class="domain">${brand.domain}</div>
+        <div class="status loading" id="status-${brand.domain}">Loading...</div>
+      `;
+
+      grid.appendChild(card);
+
+      const img = document.getElementById(`logo-${brand.domain}`);
+      const status = document.getElementById(`status-${brand.domain}`);
+
+      img.onload = () => {
+        status.textContent = '✓ Logo Loaded';
+        status.className = 'status success';
+      };
+
+      img.onerror = () => {
+        status.textContent = '✗ Failed to Load';
+        status.className = 'status error';
+        img.style.display = 'none';
+      };
+    });
+  </script>
+</body>
+</html>

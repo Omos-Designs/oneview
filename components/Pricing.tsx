@@ -9,7 +9,7 @@ import ButtonCheckout from "./ButtonCheckout";
 // <ButtonCheckout /> renders a button that will redirect the user to Stripe checkout called the /api/stripe/create-checkout API endpoint with the correct priceId
 
 const Pricing = () => {
-  const [isPlaidEnabled, setIsPlaidEnabled] = useState(false);
+  const [isPlaidEnabled] = useState(false);
 
   // Get plans based on toggle state
   const monthlyPlan = config.stripe.plans.find(

@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 
 interface SidebarContextType {
   isPinned: boolean;
-  setIsPinned: (pinned: boolean) => void;
+  setIsPinned: (_value: boolean) => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);

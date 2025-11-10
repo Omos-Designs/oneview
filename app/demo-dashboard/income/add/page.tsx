@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 import CollapsibleSection from "@/components/dashboard/CollapsibleSection";
+import { SidebarProvider, useSidebar } from "@/components/dashboard/SidebarContext";
 
-export default function AddIncomePage() {
+function AddIncomePageContent() {
   const router = useRouter();
+  const { isPinned } = useSidebar();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ export default function AddIncomePage() {
     <div className="flex min-h-screen bg-base-100">
       <Sidebar />
 
-      <div className="flex-1 ml-64">
+      <div className={`flex-1 transition-all duration-300 ${isPinned ? 'ml-64' : 'ml-20'}`}>
         <TopBar onReset={() => {}} />
 
         <main className="p-8">
@@ -131,5 +133,13 @@ export default function AddIncomePage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function AddIncomePage() {
+  return (
+    <SidebarProvider>
+      <AddIncomePageContent />
+    </SidebarProvider>
   );
 }

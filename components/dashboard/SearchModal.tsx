@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -14,7 +13,7 @@ interface SearchResult {
   description: string;
   href: string;
   category: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
 }
 
 const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
@@ -185,7 +184,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                   d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
                 />
               </svg>
-              <p className="text-base-content/60">No results found for "{searchQuery}"</p>
+              <p className="text-base-content/60">No results found for &quot;{searchQuery}&quot;</p>
             </div>
           ) : (
             <div className="py-2">

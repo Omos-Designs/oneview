@@ -19,7 +19,7 @@ export default function DemoBanner() {
       <div className="flex-1 w-full sm:w-auto">
         <h3 className="font-semibold text-purple-500 text-sm sm:text-base">Manual Mode</h3>
         <div className="text-xs sm:text-sm text-base-content/80 mt-0.5">
-          You're currently in <strong>Manual Mode</strong> where you track and update everything yourself.{" "}
+          You&apos;re currently in <strong>Manual Mode</strong> where you track and update everything yourself.{" "}
           <span className="hidden sm:inline">
             With <strong className="text-purple-500">Plaid linking enabled</strong>, all of this would be fully automated—your
             accounts, balances, and subscriptions would sync automatically in real-time with zero manual entry!

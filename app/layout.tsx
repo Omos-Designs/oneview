@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Overpass, Overpass_Mono, Inter } from "next/font/google";
+import { Overpass } from "next/font/google";
 import { Viewport } from "next";
 import { getSEOTags } from "@/libs/seo";
 import ClientLayout from "@/components/LayoutClient";

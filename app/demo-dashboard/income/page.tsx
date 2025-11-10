@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 import CollapsibleSection from "@/components/dashboard/CollapsibleSection";
@@ -755,7 +755,7 @@ function IncomePageContent() {
                         </svg>
                         <div>
                           <h3 className="font-bold text-sm">Bi-weekly Income</h3>
-                          <div className="text-xs">You'll receive 2 paychecks per month. Enter the amount for each paycheck below.</div>
+                          <div className="text-xs">You&apos;ll receive 2 paychecks per month. Enter the amount for each paycheck below.</div>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -805,7 +805,7 @@ function IncomePageContent() {
                         </svg>
                         <div>
                           <h3 className="font-bold text-sm">Weekly Income</h3>
-                          <div className="text-xs">You'll receive 4 paychecks per month. Enter the amount for each week below.</div>
+                          <div className="text-xs">You&apos;ll receive 4 paychecks per month. Enter the amount for each week below.</div>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

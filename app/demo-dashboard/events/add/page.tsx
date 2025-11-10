@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -175,7 +175,7 @@ function AddEventContent() {
           amount: parseFloat(formData.get("amount") as string),
           dueDate: formData.get("dueDate") as string,
           category: formData.get("category") as string,
-          logo: null
+          logo: null as string | null
         };
 
         const existingExpenses = JSON.parse(localStorage.getItem("expenses") || "[]");

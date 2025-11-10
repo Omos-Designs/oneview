@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
@@ -200,7 +200,7 @@ function DashboardContent() {
       amount,
       dueDate,
       category,
-      logo: null,
+      logo: null as string | null,
     };
     setUpcomingExpenses([...upcomingExpenses, newExpense]);
     setShowAddTransactionModal(false);
@@ -229,6 +229,7 @@ function DashboardContent() {
       type,
       balance,
       active: true,
+      provider: name,
       logo: `https://img.logo.dev/${name.toLowerCase().replace(/\s+/g, '')}.com?token=${process.env.NEXT_PUBLIC_LOGO_DEV_KEY}`,
     };
     setAccounts([...accounts, newAccount]);
@@ -243,6 +244,7 @@ function DashboardContent() {
       name,
       balance,
       limit,
+      dueDate: "Dec 1",
       logo: `https://img.logo.dev/${name.toLowerCase().replace(/\s+/g, '')}.com?token=${process.env.NEXT_PUBLIC_LOGO_DEV_KEY}`,
     };
     setCreditCards([...creditCards, newCard]);
@@ -296,7 +298,7 @@ function DashboardContent() {
               <div className="min-w-0">
                 <h1 className="text-lg sm:text-xl font-bold truncate">Welcome back, Demo User!</h1>
                 <p className="text-xs text-base-content/60">
-                  Here's your financial overview for December 2025
+                  Here&apos;s your financial overview for December 2025
                 </p>
               </div>
             </div>
@@ -1159,7 +1161,7 @@ function DashboardContent() {
                           </svg>
                           <div>
                             <h3 className="font-bold text-sm">Bi-weekly Income</h3>
-                            <div className="text-xs">You'll receive 2 paychecks per month. Enter the amount for each paycheck below.</div>
+                            <div className="text-xs">You&apos;ll receive 2 paychecks per month. Enter the amount for each paycheck below.</div>
                           </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1209,7 +1211,7 @@ function DashboardContent() {
                           </svg>
                           <div>
                             <h3 className="font-bold text-sm">Weekly Income</h3>
-                            <div className="text-xs">You'll receive 4 paychecks per month. Enter the amount for each week below.</div>
+                            <div className="text-xs">You&apos;ll receive 4 paychecks per month. Enter the amount for each week below.</div>
                           </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

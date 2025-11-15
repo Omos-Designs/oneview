@@ -1,15 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { createClient } from "@/libs/supabase/client";
 import { useSidebar } from "./SidebarContext";
 
 const Sidebar = () => {
+  const router = useRouter();
   const { isPinned, setIsPinned } = useSidebar();
   const [showDropdown, setShowDropdown] = useState(false);
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+
+  // Detect if we're in demo-dashboard or regular dashboard
+  const basePath = pathname?.startsWith("/demo-dashboard") ? "/demo-dashboard" : "/dashboard";
+
+  // Fetch user data on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        setUser(user);
+
+        // Fetch profile data
+        const { data: profileData } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        setProfile(profileData);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  // Sign out handler
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
+  // Get user display name and avatar
+  const displayName = profile?.name || user?.user_metadata?.name || user?.email?.split("@")[0] || "User";
+  const displayEmail = user?.email || "";
+  const avatarUrl = user?.user_metadata?.avatar_url;
 
   return (
     <aside className={`fixed left-0 top-0 h-screen bg-base-300/50 backdrop-blur-md border-r border-base-content/10 flex flex-col z-50 transition-all duration-300 ${isPinned ? 'w-64' : 'w-20'}`}>
@@ -19,8 +62,8 @@ const Sidebar = () => {
           <Image
             src="/oneview_logo.svg"
             alt="OneView"
-            width={32}
-            height={32}
+            width={48}
+            height={48}
             className="group-hover:scale-110 transition-transform"
           />
           {isPinned && <span className="font-bold text-lg whitespace-nowrap">OneView</span>}
@@ -62,9 +105,10 @@ const Sidebar = () => {
           </div>
         )}
         <Link
-          href="/demo-dashboard"
+          href={basePath}
+          data-tour="sidebar-dashboard"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors ${
-            pathname === "/demo-dashboard"
+            pathname === basePath
               ? "bg-accent/10 text-accent"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -91,9 +135,10 @@ const Sidebar = () => {
         )}
         {!isPinned && <div className="divider my-2"></div>}
         <Link
-          href="/demo-dashboard/accounts"
+          href={`${basePath}/accounts`}
+          data-tour="sidebar-accounts"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-            pathname === "/demo-dashboard/accounts"
+            pathname === `${basePath}/accounts`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -105,19 +150,15 @@ const Sidebar = () => {
             fill="currentColor"
             className="w-5 h-5 flex-shrink-0"
           >
-            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-            <path
-              fillRule="evenodd"
-              d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-              clipRule="evenodd"
-            />
+            <path fillRule="evenodd" d="M1 2.75A.75.75 0 011.75 2h10.5a.75.75 0 010 1.5H12v13.75a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75V3.5h-.25A.75.75 0 011 2.75zM4 5.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zM4.5 9a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zM8 5.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zM8.5 9a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zM14.25 6a.75.75 0 00-.75.75V17a1 1 0 001 1h3.75a.75.75 0 00.75-.75V6.75a.75.75 0 00-.75-.75h-3.25zm.5 3.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm.5 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1z" clipRule="evenodd" />
           </svg>
           {isPinned && <span className="whitespace-nowrap">Bank Accounts</span>}
         </Link>
         <Link
-          href="/demo-dashboard/credit-cards"
+          href={`${basePath}/credit-cards`}
+          data-tour="sidebar-cards"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-            pathname === "/demo-dashboard/credit-cards"
+            pathname === `${basePath}/credit-cards`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -138,9 +179,10 @@ const Sidebar = () => {
           {isPinned && <span className="whitespace-nowrap">Credit Cards</span>}
         </Link>
         <Link
-          href="/demo-dashboard/income"
+          href={`${basePath}/income`}
+          data-tour="sidebar-income"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-            pathname === "/demo-dashboard/income"
+            pathname === `${basePath}/income`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -161,9 +203,10 @@ const Sidebar = () => {
           {isPinned && <span className="whitespace-nowrap">Income</span>}
         </Link>
         <Link
-          href="/demo-dashboard/expenses"
+          href={`${basePath}/expenses`}
+          data-tour="sidebar-expenses"
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-            pathname === "/demo-dashboard/expenses"
+            pathname === `${basePath}/expenses`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -184,9 +227,9 @@ const Sidebar = () => {
           {isPinned && <span className="whitespace-nowrap">Expenses</span>}
         </Link>
         <Link
-          href="/demo-dashboard/analytics"
+          href={`${basePath}/analytics`}
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
-            pathname === "/demo-dashboard/analytics"
+            pathname === `${basePath}/analytics`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
@@ -213,13 +256,13 @@ const Sidebar = () => {
         )}
         {!isPinned && <div className="divider my-2"></div>}
         <Link
-          href="/demo-dashboard/settings"
-          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors opacity-50 pointer-events-none ${
-            pathname === "/demo-dashboard/settings"
+          href={`${basePath}/settings`}
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+            pathname === `${basePath}/settings`
               ? "bg-accent/10 text-accent font-medium"
               : "hover:bg-base-content/5 text-base-content/70 hover:text-base-content"
           } ${!isPinned && 'justify-center'}`}
-          title={!isPinned ? "Settings (Disabled in demo)" : "Disabled in demo mode"}
+          title={!isPinned ? "Settings" : ""}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -246,31 +289,37 @@ const Sidebar = () => {
             onClick={() => setShowDropdown(!showDropdown)}
           >
             <div className="avatar">
-              <div className={`rounded-full ${isPinned ? 'w-10' : 'w-8'}`}>
-                <Image
-                  src="/profile.svg"
-                  alt="Demo User"
-                  width={isPinned ? 40 : 32}
-                  height={isPinned ? 40 : 32}
-                />
+              <div className={`rounded-full overflow-hidden ${isPinned ? 'w-10 h-10' : 'w-8 h-8'}`}>
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={displayName}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-accent flex items-center justify-center text-white font-semibold">
+                    {displayName.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
             </div>
             {isPinned && (
               <div className="flex-1 text-left overflow-hidden">
-                <p className="font-semibold text-sm truncate">Demo User</p>
-                <p className="text-xs text-base-content/60 truncate">demo@one-view.app</p>
+                <p className="font-semibold text-sm truncate">{displayName}</p>
+                <p className="text-xs text-base-content/60 truncate">{displayEmail}</p>
               </div>
             )}
           </button>
           <ul tabIndex={0} className="dropdown-content z-50 menu p-2 shadow-xl bg-base-100 rounded-lg w-52 border border-base-content/10 mb-2">
             <li className="menu-title px-4 py-2">
-              <span className="text-xs font-semibold">Demo User</span>
-              <span className="text-xs opacity-60">demo@one-view.app</span>
+              <span className="text-xs font-semibold">{displayName}</span>
+              <span className="text-xs opacity-60">{displayEmail}</span>
             </li>
             <li><a className="text-sm">Profile</a></li>
-            <li><a className="text-sm opacity-50 pointer-events-none">Settings</a></li>
+            <li><a className="text-sm">Settings</a></li>
             <div className="divider my-1"></div>
-            <li><a className="text-sm text-error">Sign Out</a></li>
+            <li><button onClick={handleSignOut} className="text-sm text-error">Sign Out</button></li>
           </ul>
         </div>
       </div>

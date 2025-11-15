@@ -39,6 +39,7 @@ export interface ConfigProps {
       price: number;
       priceAnchor?: number;
       category?: string;
+      mode?: "payment" | "subscription";
       features: {
         name: string;
       }[];

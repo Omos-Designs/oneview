@@ -9,7 +9,7 @@ import ButtonCheckout from "./ButtonCheckout";
 // <ButtonCheckout /> renders a button that will redirect the user to Stripe checkout called the /api/stripe/create-checkout API endpoint with the correct priceId
 
 const Pricing = () => {
-  const [isPlaidEnabled] = useState(false);
+  const [isPlaidEnabled, setIsPlaidEnabled] = useState(false);
 
   // Get plans based on toggle state
   const monthlyPlan = config.stripe.plans.find(
@@ -23,45 +23,15 @@ const Pricing = () => {
 
   return (
     <section className="section-spacing bg-background-muted relative" id="pricing">
-      {/* Grayed out overlay */}
-      <div className="absolute inset-0 bg-base-100/40 backdrop-blur-[2px] z-10 pointer-events-none"></div>
-
       <div className="container-primary max-w-5xl relative">
         <div className="flex flex-col text-center w-full mb-8 md:mb-12">
           <p className="font-semibold text-sm text-accent mb-3 uppercase tracking-wider">
             Pricing
           </p>
 
-          {/* Construction Banner */}
-          <div className="relative mb-6">
-            {/* Black and yellow striped tape - top */}
-            <div className="absolute -top-8 left-0 right-0 h-8 overflow-hidden z-20">
-              <div className="w-full h-full bg-repeating-stripes transform -rotate-2"></div>
-            </div>
-
-            <div className="relative inline-block mx-auto">
-              <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-4">
-                Simple, Transparent Pricing
-              </h2>
-
-              {/* Launching Soon Badge */}
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
-                <div className="bg-yellow-400 text-black px-6 py-2 rounded-lg shadow-xl border-2 border-black transform -rotate-2">
-                  <div className="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                      <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                    </svg>
-                    <span className="font-black text-sm uppercase tracking-wider">Launching Soon</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Black and yellow striped tape - bottom */}
-            <div className="absolute -bottom-2 left-0 right-0 h-8 overflow-hidden z-20">
-              <div className="w-full h-full bg-repeating-stripes transform rotate-1"></div>
-            </div>
-          </div>
+          <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-4">
+            Simple, Transparent Pricing
+          </h2>
 
           <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
             Choose between manual updates or automated account linking
@@ -70,21 +40,23 @@ const Pricing = () => {
 
         {/* Toggle Switch */}
         <div className="flex flex-col items-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-4 bg-background/80 backdrop-blur-sm p-2 rounded-full border-2 border-border-subtle shadow-lg opacity-60 pointer-events-none">
+          <div className="inline-flex items-center gap-4 bg-background/80 backdrop-blur-sm p-2 rounded-full border-2 border-border-subtle shadow-lg">
             <button
+              onClick={() => setIsPlaidEnabled(false)}
               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
                 !isPlaidEnabled
                   ? "bg-accent text-white shadow-md scale-105"
-                  : "text-base-content/70"
+                  : "text-base-content/70 hover:text-base-content"
               }`}
             >
               Manual Entry
             </button>
             <button
+              onClick={() => setIsPlaidEnabled(true)}
               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 flex items-center gap-2 ${
                 isPlaidEnabled
                   ? "bg-accent text-white shadow-md scale-105"
-                  : "text-base-content/70"
+                  : "text-base-content/70 hover:text-base-content"
               }`}
             >
               <svg
@@ -129,7 +101,7 @@ const Pricing = () => {
               )}
 
               <div
-                className={`relative flex flex-col h-full gap-5 lg:gap-6 z-10 bg-background/95 backdrop-blur-md blur-[5px] p-6 md:p-8 rounded-xl border border-border-subtle shadow-xl hover:shadow-2xl hover:shadow-accent/10 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 group pointer-events-none ${
+                className={`relative flex flex-col h-full gap-5 lg:gap-6 z-10 bg-background/95 backdrop-blur-md p-6 md:p-8 rounded-xl border border-border-subtle shadow-xl hover:shadow-2xl hover:shadow-accent/10 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 group ${
                   plan.isFeatured ? "ring-2 ring-accent/20 hover:ring-accent/40" : "hover:ring-2 hover:ring-accent/20"
                 }`}
               >
@@ -179,7 +151,7 @@ const Pricing = () => {
                   </ul>
                 )}
                 <div className="space-y-2">
-                  <ButtonCheckout priceId={plan.priceId} />
+                  <ButtonCheckout priceId={plan.priceId} mode={plan.mode} />
                   {plan.name.includes("Lifetime") && (
                     <p className="flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative">
                       Pay once. Access forever.

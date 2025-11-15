@@ -25,8 +25,8 @@ const ButtonCheckout = ({
         "/stripe/create-checkout",
         {
           priceId,
-          successUrl: window.location.href,
-          cancelUrl: window.location.href,
+          successUrl: window.location.origin + "/dashboard?from=stripe",
+          cancelUrl: window.location.origin + "/#pricing",
           mode,
         }
       );
@@ -34,6 +34,17 @@ const ButtonCheckout = ({
       window.location.href = url;
     } catch (e) {
       console.error(e);
+
+      // If user is not authenticated (401 error), store their checkout intent
+      // This allows auto-resuming the checkout flow after they sign in
+      // Use localStorage (not sessionStorage) so it persists across tabs for Magic Link auth
+      if (e?.response?.status === 401) {
+        localStorage.setItem(
+          "checkout-intent",
+          JSON.stringify({ priceId, mode })
+        );
+        // Redirect will be handled by apiClient interceptor
+      }
     }
 
     setIsLoading(false);

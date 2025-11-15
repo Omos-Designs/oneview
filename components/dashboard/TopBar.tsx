@@ -1,23 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { createClient } from "@/libs/supabase/client";
 import SearchModal from "./SearchModal";
 
 interface TopBarProps {
   onReset?: () => void;
 }
 
-const TopBar = ({ onReset }: TopBarProps) => {
+const TopBar = ({ onReset }: TopBarProps = {}) => {
+  const router = useRouter();
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
 
-  // Load theme from localStorage on mount
+  // Fetch user data on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        setUser(user);
+
+        // Fetch profile data
+        const { data: profileData } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        setProfile(profileData);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  // Load theme from localStorage on mount - default to light
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+    const initialTheme = savedTheme || "light"; // Always default to light
     setTheme(initialTheme);
     document.documentElement.setAttribute("data-theme", initialTheme);
   }, []);
@@ -42,53 +68,27 @@ const TopBar = ({ onReset }: TopBarProps) => {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
   };
+
+  // Sign out handler
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
+  // Get user display name and avatar
+  const displayName = profile?.name || user?.user_metadata?.name || user?.email?.split("@")[0] || "User";
+  const displayEmail = user?.email || "";
+  const avatarUrl = user?.user_metadata?.avatar_url;
+
   return (
     <>
-      {/* Purple Demo Mode Banner - Top Level */}
-      <div className="sticky top-0 z-50 bg-accent border-b border-accent-content/10">
-        <div className="flex items-center justify-between px-6 py-2.5">
-          {/* Left: Demo Mode Label */}
-          <div className="flex items-center gap-2 text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-4 h-4 opacity-90"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="text-sm font-semibold">Demo Mode</span>
-            <span className="text-xs opacity-80">• Sample data only</span>
-          </div>
-
-          {/* Right: Action Buttons */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onReset}
-              className="px-3 py-1.5 text-xs font-medium text-white border border-white/30 rounded-lg hover:bg-white/10 transition-colors w-16 sm:w-auto"
-            >
-              Reset
-            </button>
-            <Link
-              href="/"
-              className="px-3 py-1.5 text-xs font-semibold bg-white text-accent rounded-lg hover:bg-white/90 transition-colors w-16 sm:w-auto text-center"
-            >
-              <span className="hidden sm:inline">Get Started →</span>
-              <span className="sm:hidden">Start</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Dashboard Header - Below Banner */}
-      <header className="sticky top-[42px] z-40 bg-base-100/95 backdrop-blur-md border-b border-base-content/10">
+      {/* Dashboard Header */}
+      <header className="sticky top-0 z-40 bg-base-100/95 backdrop-blur-md border-b border-base-content/10">
         <div className="flex items-center justify-between px-6 py-3">
           {/* Search Bar */}
           <button
+            data-tour="search-bar"
             onClick={() => setShowSearchModal(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-base-content/5 hover:bg-base-content/10 transition-colors border border-base-content/10 text-sm"
           >
@@ -139,25 +139,31 @@ const TopBar = ({ onReset }: TopBarProps) => {
             <div className="dropdown dropdown-end">
               <button tabIndex={0} className="btn btn-sm btn-circle btn-ghost">
                 <div className="avatar">
-                  <div className="w-8 h-8 rounded-full">
-                    <Image
-                      src="/profile.svg"
-                      alt="Demo User"
-                      width={32}
-                      height={32}
-                    />
+                  <div className="w-8 h-8 rounded-full overflow-hidden">
+                    {avatarUrl ? (
+                      <img
+                        src={avatarUrl}
+                        alt={displayName}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-accent flex items-center justify-center text-white font-semibold text-sm">
+                        {displayName.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
                 </div>
               </button>
               <ul tabIndex={0} className="dropdown-content z-50 menu p-2 shadow-xl bg-base-100 rounded-lg w-52 border border-base-content/10 mt-2">
                 <li className="menu-title px-4 py-2">
-                  <span className="text-xs font-semibold">Demo User</span>
-                  <span className="text-xs opacity-60">demo@one-view.app</span>
+                  <span className="text-xs font-semibold">{displayName}</span>
+                  <span className="text-xs opacity-60">{displayEmail}</span>
                 </li>
                 <li><a className="text-sm">Profile</a></li>
                 <li><a className="text-sm">Settings</a></li>
                 <div className="divider my-1"></div>
-                <li><a className="text-sm text-error">Sign Out</a></li>
+                <li><button onClick={handleSignOut} className="text-sm text-error">Sign Out</button></li>
               </ul>
             </div>
           </div>

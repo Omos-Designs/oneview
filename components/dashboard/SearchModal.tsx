@@ -26,7 +26,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Dashboard",
       description: "View your financial overview",
-      href: "/demo-dashboard",
+      href: "/dashboard",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -37,7 +37,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Bank Accounts",
       description: "Manage your bank accounts",
-      href: "/demo-dashboard/accounts",
+      href: "/dashboard/accounts",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -49,7 +49,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Credit Cards",
       description: "View and manage credit cards",
-      href: "/demo-dashboard/credit-cards",
+      href: "/dashboard/credit-cards",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -60,7 +60,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Income",
       description: "Track your income sources",
-      href: "/demo-dashboard/income",
+      href: "/dashboard/income",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -71,7 +71,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Expenses",
       description: "Manage your expenses",
-      href: "/demo-dashboard/expenses",
+      href: "/dashboard/expenses",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -82,7 +82,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     {
       title: "Analytics",
       description: "View financial analytics",
-      href: "/demo-dashboard/analytics",
+      href: "/dashboard/analytics",
       category: "Pages",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">

@@ -55,6 +55,13 @@ export async function POST(req: NextRequest) {
         const userId = stripeObject.client_reference_id;
         const plan = configFile.stripe.plans.find((p) => p.priceId === priceId);
 
+        console.log("[Webhook checkout.session.completed] Data:", {
+          customerId,
+          priceId,
+          userId,
+          planFound: !!plan,
+        });
+
         const customer = (await stripe.customers.retrieve(
           customerId as string
         )) as Stripe.Customer;
@@ -87,17 +94,48 @@ export async function POST(req: NextRequest) {
             .eq("id", userId)
             .single();
 
-          user = profile;
+          if (profile) {
+            user = profile;
+          } else {
+            // Profile doesn't exist yet - create it
+            // This happens when user goes straight from auth -> checkout without visiting dashboard
+            const { data: authUser } = await supabase.auth.admin.getUserById(
+              userId
+            );
+
+            if (authUser?.user) {
+              await supabase.from("profiles").insert({
+                id: authUser.user.id,
+                email: authUser.user.email,
+                has_access: false,
+              });
+
+              user = { id: authUser.user.id, email: authUser.user.email };
+            }
+          }
         }
 
-        await supabase
-          .from("profiles")
-          .update({
-            customer_id: customerId,
-            price_id: priceId,
-            has_access: true,
-          })
-          .eq("id", user?.id);
+        // Update the profile with payment info and grant access
+        if (user?.id) {
+          console.log("[Webhook] Updating profile for user:", user.id);
+          const { data, error } = await supabase
+            .from("profiles")
+            .update({
+              customer_id: customerId,
+              price_id: priceId,
+              has_access: true,
+              plan_category: plan.category, // 'manual' or 'plaid'
+            })
+            .eq("id", user.id);
+
+          if (error) {
+            console.error("[Webhook] Error updating profile:", error);
+          } else {
+            console.log("[Webhook] Profile updated successfully");
+          }
+        } else {
+          console.error("[Webhook] No user found, cannot update profile");
+        }
 
         // Extra: send email with user link, product page, etc...
         // try {
@@ -143,6 +181,13 @@ export async function POST(req: NextRequest) {
         // ✅ Grant access to the product
         const stripeObject: Stripe.Invoice = event.data
           .object as Stripe.Invoice;
+
+        // Check if price data exists
+        if (!stripeObject.lines?.data?.[0]?.price?.id) {
+          console.log("invoice.paid: No price data found, skipping");
+          break;
+        }
+
         const priceId = stripeObject.lines.data[0].price.id;
         const customerId = stripeObject.customer;
 
@@ -154,7 +199,7 @@ export async function POST(req: NextRequest) {
           .single();
 
         // Make sure the invoice is for the same plan (priceId) the user subscribed to
-        if (profile.price_id !== priceId) break;
+        if (!profile || profile.price_id !== priceId) break;
 
         // Grant the profile access to your product. It's a boolean in the database, but could be a number of credits, etc...
         await supabase

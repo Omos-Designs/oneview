@@ -10,9 +10,9 @@ const config = {
   domainName: "one-view.app",
   crisp: {
     // Crisp website ID. IF YOU DON'T USE CRISP: just remove this => Then add a support email in this config file (resend.supportEmail) otherwise customer support won't work.
-    id: "",
+    id: "04bb4a0a-4eb0-43a0-8e2d-0013b1844f79",
     // Hide Crisp by default, except on route "/". Crisp is toggled with <ButtonSupport/>. If you want to show Crisp on every routes, just remove this below
-    onlyShowOnRoutes: ["/"],
+    onlyShowOnRoutes: ["/dashboard", "/dashboard/accounts", "/dashboard/credit-cards", "/dashboard/income", "/dashboard/expenses", "/dashboard/analytics", "/dashboard/settings"],
   },
   stripe: {
     // Create multiple plans in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
@@ -21,8 +21,8 @@ const config = {
         // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1Niyy5AxyNprDp7iZIqEyD2h"
-            : "price_manual_monthly",
+            ? "price_1SSVvLHTkAOArqRlZ7LSNZ5l"
+            : "price_1SSVvLHTkAOArqRlZ7LSNZ5l",
         //  REQUIRED - Name of the plan, displayed on the pricing page
         name: "Manual Monthly",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
@@ -33,6 +33,8 @@ const config = {
         priceAnchor: null,
         // Category to group plans by linking type
         category: "manual",
+        // Mode for Stripe Checkout: "payment" for one-time, "subscription" for recurring
+        mode: "subscription" as const,
         features: [
           {
             name: "Financial health dashboard",
@@ -47,14 +49,15 @@ const config = {
       {
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1O5KtcAxyNprDp7iftKnrrpw"
-            : "price_manual_lifetime",
+            ? "price_1SSVw8HTkAOArqRlfUqObDnh"
+            : "price_1SSVw8HTkAOArqRlfUqObDnh",
         name: "Manual Lifetime",
         description: "One-time payment, manual control forever",
         isFeatured: true,
         price: 14,
         priceAnchor: null,
         category: "manual",
+        mode: "payment" as const,
         features: [
           {
             name: "Everything in Manual Monthly",
@@ -69,13 +72,14 @@ const config = {
       {
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1Niyy5AxyNprDp7iZIqEyD2h_plaid"
-            : "price_plaid_monthly",
+            ? "price_1SSVweHTkAOArqRlXie4zfTy"
+            : "price_1SSVweHTkAOArqRlXie4zfTy",
         name: "Pro Monthly",
         description: "Full automation with Plaid integration",
         price: 7,
         priceAnchor: null,
         category: "plaid",
+        mode: "subscription" as const,
         features: [
           {
             name: "Connect unlimited bank accounts",
@@ -90,8 +94,8 @@ const config = {
       {
         priceId:
           process.env.NODE_ENV === "development"
-            ? "price_1O5KtcAxyNprDp7iftKnrrpw_plaid"
-            : "price_plaid_lifetime",
+            ? "price_1SSVxUHTkAOArqRlpzcVwOFC"
+            : "price_1SSVxUHTkAOArqRlpzcVwOFC",
         // This plan will look different on the pricing page, it will be highlighted. You can only have one plan with isFeatured: true
         isFeatured: true,
         name: "Pro Lifetime",
@@ -99,6 +103,7 @@ const config = {
         price: 49,
         priceAnchor: null,
         category: "plaid",
+        mode: "payment" as const,
         features: [
           {
             name: "Everything in Pro Monthly",

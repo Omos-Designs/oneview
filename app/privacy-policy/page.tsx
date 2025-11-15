@@ -57,55 +57,71 @@ const PrivacyPolicy = () => {
           className="leading-relaxed whitespace-pre-wrap"
           style={{ fontFamily: "sans-serif" }}
         >
-          {`Last Updated: 2023-08-25
+          {`Last Updated: 2025-11-12
 
-Thank you for visiting ShipFast ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://shipfa.st (the "Website").
+        Thank you for visiting OneView ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://one-view.app (the "Website").
 
-By accessing or using the Website, you agree to the terms of this Privacy Policy. If you do not agree with the practices described in this policy, please do not use the Website.
+        By accessing or using the Website, you agree to the terms of this Privacy Policy. If you do not agree with the practices described in this policy, please do not use the Website.
 
-1. Information We Collect
+        1. Information We Collect
 
-1.1 Personal Data
+        1.1 Personal Data
 
-We collect the following personal information from you:
+        We collect the following personal information from you:
 
-Name: We collect your name to personalize your experience and communicate with you effectively.
-Email: We collect your email address to send you important information regarding your orders, updates, and communication.
-Payment Information: We collect payment details to process your orders securely. However, we do not store your payment information on our servers. Payments are processed by trusted third-party payment processors.
+        Name: We collect your name to personalize your experience and communicate with you effectively.
+        Email: We collect your email address to send you important information regarding your account, updates, and communication.
+        Payment Information: We collect payment details to process your subscriptions securely. However, we do not store your payment information on our servers. Payments are processed by trusted third-party payment processors.
 
-1.2 Non-Personal Data
+        1.2 Financial Data
 
-We may use web cookies and similar technologies to collect non-personal information such as your IP address, browser type, device information, and browsing patterns. This information helps us to enhance your browsing experience, analyze trends, and improve our services.
+        We collect financial institution names, account balances, expense amounts, and income amounts, which may be entered manually by you or linked automatically through trusted third-party services such as Plaid.
 
-2. Purpose of Data Collection
+        When you choose to connect your accounts through Plaid, we do not have access to or store your bank login credentials, account numbers, or routing numbers. All authentication and account linking are handled securely by Plaid, and we only receive the financial data necessary to display your information in your dashboard.
 
-We collect and use your personal data for the sole purpose of order processing. This includes processing your orders, sending order confirmations, providing customer support, and keeping you updated about the status of your orders.
+        1.3 Non-Personal Data
 
-3. Data Sharing
+        We may use web cookies and similar technologies to collect non-personal information such as your IP address, browser type, device information, and browsing patterns. This information helps us to enhance your browsing experience, analyze trends, and improve our services.
 
-We do not share your personal data with any third parties except as required for order processing (e.g., sharing your information with payment processors). We do not sell, trade, or rent your personal information to others.
+        2. Purpose of Data Collection
 
-4. Children's Privacy
+        We collect and use your personal and financial data for the following purposes:
+        - Processing orders and subscriptions.
+        - Displaying financial data in your dashboard.
+        - Maintaining and improving the Website and Service.
 
-ShipFast is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
+        3. Data Sharing
 
-5. Updates to the Privacy Policy
+        We do not sell, trade, or share your personal or financial data with any third parties. Your financial institution data remains private and is only displayed within your account dashboard.
 
-We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any updates will be posted on this page, and we may notify you via email about significant changes.
+        4. Data Security
 
-6. Contact Information
+        We take reasonable measures to protect your information from unauthorized access, use, or disclosure. Sensitive data transmitted through Plaid or our payment processor is handled using secure, encrypted connections.
 
-If you have any questions, concerns, or requests related to this Privacy Policy, you can contact us at:
+        5. Children's Privacy
 
-Email: marc@shipfa.st
+        OneView is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
 
-For all other inquiries, please visit our Contact Us page on the Website.
+        6. Cookies
 
-By using ShipFast, you consent to the terms of this Privacy Policy.`}
-        </pre>
-      </div>
-    </main>
-  );
+        We use cookies to enhance your browsing experience and analyze website performance. You can disable cookies through your browser settings if you prefer.
+
+        7. Updates to the Privacy Policy
+
+        We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any updates will be posted on this page, and we may notify you via email about significant changes.
+
+        8. Contact Information
+
+        If you have any questions, concerns, or requests related to this Privacy Policy, you can contact us at:
+
+        Email: support@one-view.app
+
+        By using OneView, you consent to the terms of this Privacy Policy.`}
+      </pre>
+    </div>
+  </main>
+);
 };
 
 export default PrivacyPolicy;
+

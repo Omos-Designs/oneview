@@ -35,6 +35,14 @@ export async function POST(req: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
+    // Require authentication - users must sign in before checkout
+    if (!user) {
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 }
+      );
+    }
+
     const { priceId, mode, successUrl, cancelUrl } = body;
 
     const { data } = await supabase

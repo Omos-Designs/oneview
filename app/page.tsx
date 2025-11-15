@@ -7,10 +7,12 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import CheckoutResumeHandler from "@/components/dashboard/CheckoutResumeHandler";
 
 export default function Home() {
   return (
     <>
+      <CheckoutResumeHandler />
       <Suspense>
         <Header />
       </Suspense>

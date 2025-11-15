@@ -9,6 +9,10 @@ import { SidebarProvider, useSidebar } from "@/components/dashboard/SidebarConte
 import { createClient } from "@/libs/supabase/client";
 import Image from "next/image";
 import AddBankAccountForm from "@/components/dashboard/AddBankAccountForm";
+import AddCreditCardForm from "@/components/dashboard/AddCreditCardForm";
+import AddExpenseForm from "@/components/dashboard/AddExpenseForm";
+import AddSubscriptionForm from "@/components/dashboard/AddSubscriptionForm";
+import AddIncomeForm from "@/components/dashboard/AddIncomeForm";
 
 // Info icon component
 const InfoIcon = ({ tooltip }: { tooltip: string }) => (
@@ -1485,165 +1489,17 @@ function DashboardContent() {
             )}
 
             {selectedEventType === "credit-card" && (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.currentTarget);
-                  handleAddCreditCard(
-                    parseFloat(formData.get("balance") as string),
-                    formData.get("dueDate") as string
-                  );
+              <AddCreditCardForm
+                onSuccess={(newCard) => {
+                  setCreditCards([...creditCards, newCard]);
+                  setShowAddTransactionModal(false);
+                  setSelectedEventType("");
                 }}
-                className="space-y-4"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold">Basic Information</h4>
-                    <span className="badge badge-sm badge-ghost">Required</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="form-control md:col-span-2">
-                      <label className="label">
-                        <span className="label-text font-medium">Credit Card Name</span>
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={cardInput}
-                          onChange={(e) => {
-                            setCardInput(e.target.value);
-                            setShowCardDropdown(true);
-                            setSelectedCardLogo(null);
-                          }}
-                          onFocus={() => setShowCardDropdown(true)}
-                          onBlur={() => {
-                            // Delay to allow clicking dropdown items
-                            setTimeout(() => setShowCardDropdown(false), 200);
-                          }}
-                          placeholder="Type to search cards or enter custom..."
-                          className="input input-bordered w-full"
-                          required
-                        />
-                        {/* Autocomplete dropdown */}
-                        {showCardDropdown && cardInput && (
-                          <div className="absolute z-10 w-full mt-1 bg-base-100 border border-base-content/20 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                            {getFilteredCards().length > 0 ? (
-                              <>
-                                {getFilteredCards().map((card) => (
-                                  <button
-                                    key={card.name}
-                                    type="button"
-                                    onClick={() => handleCardSelect(card)}
-                                    className="flex items-center gap-3 w-full px-4 py-2 hover:bg-base-content/10 transition-colors text-left"
-                                  >
-                                    {card.domain && (
-                                      <img
-                                        src={`https://img.logo.dev/${card.domain}?token=${process.env.NEXT_PUBLIC_LOGO_DEV_KEY || ""}`}
-                                        alt={card.name}
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                      />
-                                    )}
-                                    <span className="font-medium">{card.name}</span>
-                                  </button>
-                                ))}
-                                {/* Custom option */}
-                                {!creditCardBrands.find((c: { name: string; domain: string }) => c.name.toLowerCase() === cardInput.toLowerCase()) && (
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      setShowCardDropdown(false);
-                                      setSelectedCardLogo(null);
-                                    }}
-                                    className="flex items-center gap-3 w-full px-4 py-2 hover:bg-base-content/10 transition-colors text-left border-t border-base-content/10"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                      className="w-5 h-5 text-base-content/60"
-                                    >
-                                      <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                                    </svg>
-                                    <div>
-                                      <div className="font-medium">Use &ldquo;{cardInput}&rdquo;</div>
-                                      <div className="text-xs text-base-content/60">Add as custom card</div>
-                                    </div>
-                                  </button>
-                                )}
-                              </>
-                            ) : (
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setShowCardDropdown(false);
-                                  setSelectedCardLogo(null);
-                                }}
-                                className="flex items-center gap-3 w-full px-4 py-2 hover:bg-base-content/10 transition-colors text-left"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  className="w-5 h-5 text-base-content/60"
-                                >
-                                  <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                                </svg>
-                                <div>
-                                  <div className="font-medium">Use &ldquo;{cardInput}&rdquo;</div>
-                                  <div className="text-xs text-base-content/60">Add as custom card</div>
-                                </div>
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="form-control md:col-span-2">
-                      <label className="label">
-                        <span className="label-text font-medium">Current Balance ($)</span>
-                      </label>
-                      <input
-                        type="number"
-                        name="balance"
-                        step="0.01"
-                        placeholder="0.00"
-                        className="input input-bordered w-full"
-                        required
-                      />
-                    </div>
-                    <div className="form-control md:col-span-2">
-                      <label className="label">
-                        <span className="label-text font-medium">Payment Due Date</span>
-                      </label>
-                      <input
-                        type="text"
-                        name="dueDate"
-                        placeholder="e.g., 15th of each month"
-                        className="input input-bordered w-full"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-end gap-2 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowAddTransactionModal(false);
-                      setSelectedEventType("");
-                    }}
-                    className="btn btn-ghost"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn btn-accent">
-                    Add Credit Card
-                  </button>
-                </div>
-              </form>
+                onCancel={() => {
+                  setShowAddTransactionModal(false);
+                  setSelectedEventType("");
+                }}
+              />
             )}
 
             {selectedEventType === "income" && (
